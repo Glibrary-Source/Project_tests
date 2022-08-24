@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">CatPhoto</string>
+    <string name="cat_name1">Sally</string>
+    <string name="cat_name2">Coco</string>
+    <string name="cat_name3">White</string>
+    <string name="cat_name4">Wolf</string>
+    <string name="cat_name5">Pain</string>
+    <string name="cat_name6">Deep dark</string>
+</resources>

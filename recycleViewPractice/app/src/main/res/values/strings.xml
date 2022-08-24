@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">recycleViewPractice</string>
+    <string name="cat_name_1">black</string>
+    <string name="cat_name_2">blue</string>
+    <string name="cat_name_3">deep dark</string>
+    <string name="cat_name_4">pink</string>
+    <string name="cat_name_5">bug</string>
+    <string name="cat_name_6">cute</string>
+    <string name="cat_age_1">4</string>
+    <string name="cat_age_2">3</string>
+    <string name="cat_age_3">2</string>
+    <string name="cat_age_4">5</string>
+    <string name="cat_age_5">7</string>
+    <string name="cat_age_6">6</string>
+
+</resources>
