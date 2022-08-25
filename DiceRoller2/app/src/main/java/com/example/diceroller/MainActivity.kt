@@ -57,6 +57,8 @@ class MainActivity : AppCompatActivity() {
 
         // Update the content description
         diceImage.contentDescription = diceRoll.toString()
+
+        
     }
 }
 
