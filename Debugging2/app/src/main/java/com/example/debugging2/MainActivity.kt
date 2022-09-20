@@ -2,32 +2,18 @@ package com.example.debugging2
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
+import com.example.debugging2.databinding.ActivityMainBinding
 
 private const val TAG = "MainActivity"
 
 class MainActivity : AppCompatActivity() {
+
+    lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        logging()
-        division()
-    }
+        binding = ActivityMainBinding.inflate(layoutInflater)
 
-    fun division() {
-        val numerator = 60
-        var denominator = 4
-        repeat(5) {
-            Log.v(TAG, "${numerator / denominator}")
-            denominator--
-        }
-    }
+        setContentView(binding.root)
 
-    fun logging() {
-        Log.e(TAG, "ERROR: a serious error like an app crash")
-        Log.w(TAG, "WARN: warns about the potential for serious errors")
-        Log.i(TAG, "INFO: reporting technical information, such as an operation succeeding")
-        Log.d(TAG, "DEBUG: reporting technical information useful for debugging")
-        Log.v(TAG, "Hello, world!")
-    }
 }

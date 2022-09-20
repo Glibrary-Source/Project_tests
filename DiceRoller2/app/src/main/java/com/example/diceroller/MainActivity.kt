@@ -1,5 +1,6 @@
 package com.example.diceroller
 
+import android.animation.ValueAnimator
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
@@ -51,14 +52,16 @@ class MainActivity : AppCompatActivity() {
             else -> R.drawable.dice_6
         }
 
+        val animationRotate: ValueAnimator = objectAnimator
+            .ofFloat(diceImage, "rotation", Of, 180f, 360,)
+
+
         // Update the ImageView with the correct drawable resource Id
         diceImage.setImageResource(drawableResource)
         diceImage2.setImageResource(drawableResource2)
 
         // Update the content description
         diceImage.contentDescription = diceRoll.toString()
-
-
     }
 }
 

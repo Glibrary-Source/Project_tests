@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Love Cat</string>
+    <string name="cat_name1">Scottish fold</string>
+    <string name="cat_name2">Siamese</string>
+    <string name="cat_name3">Persian</string>
+    <string name="cat_name4">Turkish Angora</string>
+    <string name="cat_name5">Russian blue</string>
+    <string name="cat_name6">bengal</string>
+    <string name="cat_name7">Munchkin</string>
+    <string name="cat_name8">Abyssinian</string>
+    <string name="cat_name9">Norwegian forest</string>
+    <string name="cat_name10">ragdoll</string>
+    <string name="cat_name11">sphinx</string>
+</resources>
