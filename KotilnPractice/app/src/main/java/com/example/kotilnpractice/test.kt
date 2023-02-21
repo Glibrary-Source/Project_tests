@@ -1,93 +1,153 @@
 package com.example.kotilnpractice
 
-import android.util.Log.i
-import javax.xml.transform.Source
-import kotlin.math.*
-import java.math.*
-import java.lang.Math
+import androidx.lifecycle.Transformations.map
 import java.util.*
-import kotlin.math.max
-import kotlin.math.min
+import kotlin.Comparator
+
 
 fun main() {
-    val peopleAges = mutableMapOf<String, Int> (
-        "Fred" to 30,
-        "Ann" to 23
+
+    Solution().solution(
+        arrayOf   ("rock" ,"rock" ,"jazz" ,"classic", "pop", "classic", "classic", "pop"),
+        intArrayOf(2000, 700, 200, 500, 600, 150, 800, 2500)
     )
-    peopleAges.put("Barbara", 42)
-    peopleAges["joe"] = 51
-    peopleAges["Fred"] = 31
-    println(peopleAges)
-
-    peopleAges.forEach { println("${it.key} is ${it.value}, ")}
-
-    println(peopleAges.map { "${it.key} is ${it.value}" }.joinToString(", ") )
-
-    val filteredNames = peopleAges.filter { it.key.length < 4 }
-    val mfilterNames = mutableMapOf<String, Int>(filteredNames.keys[], )
-    println(filteredNames)
 
 
+//    Solution().solution(
+//        arrayOf(
+//            arrayOf("crow_mask", "face"),
+//            arrayOf("blue_sunglasses", "face"),
+//            arrayOf("smoky_makeup", "face")
+//        )
+//    )
 
-//
-//    val result = Solution()
-//
-//    val arrayResult = arrayOf(intArrayOf(60, 50), intArrayOf(30, 70), intArrayOf(60, 30), intArrayOf(80, 40))
-//    result.solution(arrayResult)
-//    val arrayResult2 = arrayOf(intArrayOf(10,7), intArrayOf(12,3), intArrayOf(8, 15), intArrayOf(14, 7), intArrayOf(5,15))
-//    result.solution(arrayResult2)
-//    val arrayResult3 = arrayOf(intArrayOf(14,4), intArrayOf(19,6), intArrayOf(6, 16), intArrayOf(18, 7), intArrayOf(7,11))
-//    result.solution(arrayResult3)
 
 }
 
+class Solution {
+    fun solution(genres: Array<String>, plays: IntArray): IntArray {
+        //genresCountHashMap 해시맵에 generes 요소를 키값으로 하고 generes 요소와 동인한 index 값에 있는 plays 요소를
+        //더한값들을 value 값으로 추가한다
+        //genresHashMap 해시맵에 generes 요소를 키값으로 하고 generes 요소와 동인한 index 값에 있는 plays 요소를
+        //String 타입으로 value 값으로 추가한다
 
-//class Solution() {
-//    fun solution(sizes: Array<IntArray>): Int {
-//        var answer: Int = 0
-//        var sizes2 = mutableListOf<Int>()
-//        for (i in sizes) {
-//            sizes2.add(i[0])
-//            sizes2.add(i[1])
-//        }
-//        var totalMax = Collections.max(sizes2)
-//
-//        var totalMinArray = mutableListOf<Int>()
-//        for(i in sizes) {
-//            if(i[0] <= i[1]) {
-//                totalMinArray.add(i[0])
-//            } else {
-//                totalMinArray.add(i[1])
-//            }
-//        }
-//        var totalMin = Collections.max(totalMinArray)
-//        answer = totalMin * totalMax
-//
-//        return answer
-//    }
-//}
-//
-//class Solution() {
-//    fun solution(sizes: Array<IntArray>): Int {
-//
-//        var totalArray = mutableListOf<Int>()
-//        var totalMinArray = mutableListOf<Int>()
-//        sizes.forEach {
-//            totalArray.add(max(it[0], it[1]))
-//            totalMinArray.add(min(it[0], it[1])
-//        }
-//
-//        return totalArray.maxOrNull()!! * totalMinArray.maxOrNull()!!
-//    }
-//}
+        var genresHashMap = hashMapOf<String, IntArray>()
+        var genresCountHashMap = hashMapOf<String, Int>()
+
+        for((index, key ) in genres.withIndex()) {
+            if (genresHashMap[key] == null) genresHashMap[key] = intArrayOf(plays[index])
+            else {
+                genresHashMap[key] = genresHashMap[key]!!.plus(plays[index])
+            }
+        }
+
+        for((index, key ) in genres.withIndex()) {
+            if(genresCountHashMap[key] == null) genresCountHashMap[key] = plays[index]
+            else { genresCountHashMap[key] = genresCountHashMap[key]!! + plays[index]}
+        }
+
+        //genresCountHashMap 변수에서 value 만 뽑아내서 역순으로 정렬한 값을 for 로 반복한뒤 genresCountHashMap 변수의
+        //value 값 과 일치하는 key 값 리스트를 만든다.
+
+        val genresCountRankList = mutableListOf<String>()
+        for(i in genresCountHashMap.map{ it.value }.sortedDescending()) {
+            for((key, value) in genresCountHashMap) {
+                if(value == i) {
+                    genresCountRankList.add("$key")
+                }
+            }
+        }
+
+
+        //genresIndexPlayHashMap 해시맵에 genres 요소를 key 값으로 요소의 index 값을 value 로 지정한다
+        var genresIndexPlayHashMap = hashMapOf<String, IntArray>()
+        for ((index, key) in  genres.withIndex()) {
+            if(genresIndexPlayHashMap[key] == null) {
+                genresIndexPlayHashMap[key] = intArrayOf(index)
+            }
+            else {
+                genresIndexPlayHashMap[key] = genresIndexPlayHashMap[key]!!.plus(index)
+            }
+        }
+
+        for(rank in genresCountRankList) {
+            for(num in genresHashMap[rank]!!.sortedDescending()) {
+                genresHashMap[rank]!!.find {it == num}
+            }
+        }
+
+        var test = hashMapOf<String, Array<String>>()
+
+        for((key, value) in genresHashMap) {
+            for((index, num) in value.withIndex()){
+                if(test[key] == null) {
+                    test[key] = arrayOf("${num} ${genresIndexPlayHashMap[key]!!.get(index)}")
+                } else {
+                    test[key] = test[key]!!.plus("${num} ${genresIndexPlayHashMap[key]!!.get(index)}")
+                }
+            }
+        }
+
+        val comparator : Comparator<String> = compareBy { it.split(" ")[0].toInt() }
+
+        var result = mutableListOf<Int>()
+
+        for(type in genresCountRankList){
+                for ((key, value) in test) {
+                    if(key == type){
+                        if (value.size == 1) {
+                            result.add(value.sortedWith(comparator)
+                                .reversed()[0].split(" ")[1].toInt())
+                        } else {
+                            result.add(value.sortedWith(comparator)
+                                .reversed()[0].split(" ")[1].toInt())
+                            result.add(value.sortedWith(comparator)
+                                .reversed()[1].split(" ")[1].toInt())
+                        }
+                    }
+                }
+        }
+        return result.toIntArray()
+    }
+}
+
 /**
- * 1) 가로와 세로 배열을 합친 배열을 total_array 으로 선언한다.
- * 2) 선언한 total_array 에서 맥스값을 total_max로 선언한다.
- * 3) 가로와 세로 값이 들어있는 배열에서 두 값중 더 작은 값들을 모은 배열을 total_min으로 선언한다.
- * 4) total_min 배열의 요소값중 가장 큰 요소를 min이라는 변수로 선언한다.
- * 5) min변수와 total_max변수와 곱한값을 answer로 선언한다.
- * 6) answer을 리턴
+ * 1. genresHashMap 변수에 genres리스트의 요소를 key값으로 plays리스트의 요소를 value 값으로 선언한다
+ * 2.
+ *
+ *
+ *
  */
+
+
+
+
+//class Solution {
+//    fun solution(clothes: Array<Array<String>>): Int {
+//        var answer = 1
+//        var clotheHashMap = hashMapOf<String, Int>()
+//        for(clothe in clothes) {
+//            clotheHashMap[clothe[1]]?.let { clotheHashMap.put(clothe[1], it + 1) } ?: clotheHashMap.put(clothe[1], 1)
+//        }
+//        println(clotheHashMap)
+//        for(i in clotheHashMap) { answer *= (i.value + 1)}
+//        println(answer)
+//        return (answer - 1)
+//    }
+//}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
